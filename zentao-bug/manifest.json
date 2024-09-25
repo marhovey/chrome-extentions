@@ -1,0 +1,38 @@
+{
+  "manifest_version": 2,
+  "name": "禅道bug",
+  "version": "1.0.1",
+  "description": "禅道bug管理",
+  "permissions": [
+    "https://*/",
+    "tabs",
+    "bookmarks",
+    "notifications",
+    "history",
+    "storage",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "icons": {
+    "16": "images/zentao.png",
+    "48": "images/zentao.png",
+    "128": "images/zentao.png"
+  },
+  "homepage_url": "https://zentao.imotorlinx.cn/max/my-work-bug-assignedTo.html",
+  "background": {
+    "persistent": true,
+    "scripts": ["content_scripts/bugFire.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.zentao.com/*",
+        "*://*.zentao.cn/*",
+        "*://zentao.imotorlinx.cn/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": ["content_scripts/bugFire.js", "images/zentao.png"]
+}
