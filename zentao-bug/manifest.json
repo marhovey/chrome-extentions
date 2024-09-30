@@ -1,27 +1,44 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "禅道bug",
   "version": "1.0.1",
   "description": "禅道bug管理",
   "permissions": [
-    "https://*/",
     "tabs",
+    "identity",
     "bookmarks",
-    "notifications",
     "history",
     "storage",
+    "nativeMessaging",
+    "downloads",
+    "activeTab",
+    "declarativeContent",
     "webRequest",
-    "webRequestBlocking"
+    "notifications",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "declarativeNetRequestWithHostAccess"
   ],
+  "externally_connectable": {
+    "matches": ["*://zentao.imotorlinx.cn/*"]
+  },
   "icons": {
     "16": "images/zentao.png",
     "48": "images/zentao.png",
     "128": "images/zentao.png"
   },
+  "action": {
+    "default_icon": {
+      "16": "images/zentao.png",
+      "24": "images/zentao.png",
+      "32": "images/zentao.png"
+    },
+    "default_title": "禅道bug管理",
+    "default_popup": "index.html"
+  },
   "homepage_url": "https://zentao.imotorlinx.cn/max/my-work-bug-assignedTo.html",
   "background": {
-    "persistent": true,
-    "scripts": ["content_scripts/bugFire.js"]
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
@@ -32,7 +49,31 @@
       ],
       "js": ["content.js"],
       "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.zentao.com/*",
+        "*://*.zentao.cn/*",
+        "*://zentao.imotorlinx.cn/*"
+      ],
+      "js": ["collect.js"],
+      "all_frames": true,
+      "run_at": "document_start"
     }
   ],
-  "web_accessible_resources": ["content_scripts/bugFire.js", "images/zentao.png"]
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content_scripts/*",
+        "images/zentao.png",
+        "background.js",
+        "index.html"
+      ],
+      "matches": [
+        "*://*.zentao.com/*",
+        "*://*.zentao.cn/*",
+        "*://zentao.imotorlinx.cn/*"
+      ]
+    }
+  ]
 }
